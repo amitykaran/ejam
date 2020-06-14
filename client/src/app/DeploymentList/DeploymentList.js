@@ -55,7 +55,9 @@ export default function DeploymentList(props) {
     }, [currentState.count]);
 
     useEffect(() => {
-        handleAddItem(false);
+        if(!currentState.isAdding) {
+            handleAddItem(false);
+        }
     }, [currentState.isAdding]);
 
     return(

@@ -149,11 +149,11 @@ table, th, td {
   border-radius: 3px;
 }
 
-.btn-danger {
-  color: #f98989;
-  background-color: #fff;
-  border: 1px solid #f98989
-}
+/*.btn-danger {*/
+/*  color: #f98989;*/
+/*  background-color: #fff;*/
+/*  border: 1px solid #f98989*/
+/*}*/
 
 .input-label {
   color: #696868;
