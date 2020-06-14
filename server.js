@@ -1,8 +1,8 @@
 const Express = require('express');
-const compression = require('compression')
+const compression = require('compression');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 // Initialize the Express App
 const app = new Express();
 
@@ -55,8 +55,10 @@ app.use((req, res, next) => {
 
 app.use('/api/deployments', deployment);
 app.use('/api/templates', template);
-
-
+app.use(Express.static(path.join(__dirname, 'public')));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+})
 // start app
 app.listen(serverConfig.PORT, (error) => {
     if (!error) {

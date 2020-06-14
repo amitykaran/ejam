@@ -2,12 +2,7 @@
  * Root Component
  */
 import React from 'react';
-// import {
-//     BrowserRouter as Router,
-//     Switch,
-//     Route,
-//     Link
-// } from "react-router-dom";
+
 
 
 import DeploymentList from "./app/DeploymentList/DeploymentList";
@@ -27,20 +22,5 @@ export default function App(props) {
               <Footer/>
           </div>
       </div>
-      // <Router>
-      //     <div>
-      //         <div>
-      //           <Header/>
-      //         </div>
-      //         <div>
-      //             <Switch>
-      //                 <Route exact path="/">
-      //                     <DeploymentList/>
-      //                 </Route>
-      //             </Switch>
-      //         </div>
-      //     </div>
-      //
-      // </Router>
   );
 }
