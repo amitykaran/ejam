@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import {
+    addDeployment,
     deleteDeployments,
     fetchDeployment,
     loadDeleteItem
@@ -11,14 +12,17 @@ import {
     getPageNum,
     getList,
     getDeleteItemStatus,
-    getFetchStatus
+    getFetchStatus,
+    getAddItemStatus
 } from '../AppReducer';
 import ListTable from "./components/ListTable";
+import AddNewItemForm from "./components/AddNewItemForm";
 
 
 
 export default function DeploymentList(props) {
 
+    const [ isOpenAddItemForm, handleAddItem] = useState(false);
     const dispatch = useDispatch();
     const currentState = useSelector((state) => {
         return {
@@ -27,12 +31,17 @@ export default function DeploymentList(props) {
             pageSize: getPageSize(state),
             count: getTotalCount(state),
             isFetching: getFetchStatus(state),
-            isDeleting: getDeleteItemStatus(state)
+            isDeleting: getDeleteItemStatus(state),
+            isAdding: getAddItemStatus(state)
         }
     })
 
     const deleteItem = (id) => {
         dispatch(deleteDeployments(id));
+    }
+
+    const addItem = (item) => {
+        dispatch(addDeployment(item));
     }
 
     useEffect(() => {
@@ -55,6 +64,11 @@ export default function DeploymentList(props) {
                     isDeleting={currentState.isDeleting}
                     isFetching={currentState.isFetching}
                     deleteItem={deleteItem}
+                />
+                <AddNewItemForm
+                    showModal={isOpenAddItemForm}
+                    close={() => handleAddItem(false)}
+                    addItem={addItem}
                 />
             </div>
         </div>

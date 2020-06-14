@@ -1,16 +1,15 @@
-import Express from 'express';
-import compression from 'compression';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
+const Express = require('express');
+const compression = require('compression')
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // Initialize the Express App
 const app = new Express();
 
-// Import required modules
-import serverConfig from './config';
+const serverConfig = require('./config');
 
 
-import deployment from './routes/deployment.routes';
+const deployment = require('./routes/deployment.routes');
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -63,4 +62,4 @@ app.listen(serverConfig.PORT, (error) => {
     }
 });
 
-export default app;
+module.exports =  app;

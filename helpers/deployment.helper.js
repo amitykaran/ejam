@@ -1,6 +1,6 @@
 'use strict';
 
-import Deployment from '../models/deployment';
+const Deployment = require('../models/deployment');
 
 function getAllObjects(filters, next) {
     let query = filters.query ? filters.query : {};
@@ -107,7 +107,7 @@ function addObject(object, next) {
     });
 }
 
-export default {
+module.exports = {
     getAllObjects: getAllObjects,
     getAllObjectsCount: getAllObjectsCount,
     getObjectById: getObjectById,

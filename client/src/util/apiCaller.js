@@ -1,8 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-const PROTOCOL = window.location.protocol;
-const HOST = window.location.host;
-const API_URL = `${PROTOCOL}//${HOST}/api`;
+export const API_URL = 'http://localhost:8080';
 
 export default function callApi(endpoint, method = 'get', body) {
     let token = window.localStorage.getItem('token') ?  window.localStorage.getItem('token') : '';

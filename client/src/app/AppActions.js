@@ -5,6 +5,8 @@ export const LOAD_DEPLOYMENT_LIST = 'LOAD_DEPLOYMENT_LIST';
 export const LOAD_DEPLOYMENT_FETCHING_STATUS = 'LOAD_DEPLOYMENT_FETCHING_STATUS';
 export const LOAD_DEPLOYMENT_DELETE_STATUS = 'LOAD_DEPLOYMENT_DELETE_STATUS';
 export const LOAD_DELETE_DEPLOYMENT = 'LOAD_DELETE_DEPLOYMENT';
+export const LOAD_ADD_ITEM = 'LOAD_ADD_ITEM';
+export const LOAD_ADD_ITEM_STATUS = 'LOAD_ADD_ITEM_STATUS';
 
 export function loadDeploymentList(data, pageNum) {
     return {
@@ -61,6 +63,34 @@ export function deleteDeployments(id) {
             } else {
                 dispatch(loadDeploymentDeletingStatus(id, false));
 
+            }
+        })
+    }
+}
+
+export function loadAddItem(item) {
+    return {
+        type: LOAD_ADD_ITEM,
+        item: item,
+        isAddingItem: false
+    }
+}
+
+export function loadAddItemStatus(status) {
+    return {
+        type: LOAD_ADD_ITEM_STATUS,
+        isAddingItem: !!status
+    }
+}
+
+export function addDeployment(item) {
+    return (dispatch) => {
+        dispatch(loadAddItemStatus(true));
+        callApi('api/deployments/new', 'post', {deployment: item}).then(res => {
+            if(res && res.status === 'Success') {
+                dispatch(loadAddItem(res.data.deployment));
+            } else {
+                dispatch(loadAddItemStatus(false));
             }
         })
     }

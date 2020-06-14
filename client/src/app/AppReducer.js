@@ -1,9 +1,11 @@
-
+import _ from 'lodash';
 import {
     LOAD_DEPLOYMENT_LIST,
     LOAD_DEPLOYMENT_FETCHING_STATUS,
     LOAD_DELETE_DEPLOYMENT,
     LOAD_DEPLOYMENT_DELETE_STATUS,
+    LOAD_ADD_ITEM_STATUS,
+    LOAD_ADD_ITEM
 } from './AppActions';
 
 // initial state
@@ -18,13 +20,14 @@ const initialState = {
     pageNum: 1,
     pageSize: 15,
     isFetchingDeployment: false,
-    isDeleting: {}
+    isDeleting: {},
+    isAdding: false
 }
 
 // reducer function
  const appReducer = (state = initialState, action) => {
      let isDeleting = state.isDeleting;
-     let items = state.items;
+     let items = _.clone(state.items);
     switch (action.type) {
         case LOAD_DEPLOYMENT_LIST:
             return {
@@ -57,6 +60,21 @@ const initialState = {
                 count: state.count - 1
             }
 
+        case LOAD_ADD_ITEM_STATUS:
+            return {
+                ...state,
+                isAdding: action.isAdding
+            }
+
+        case LOAD_ADD_ITEM:
+            items.push(action.item);
+            return {
+                ...state,
+                items: items,
+                count: state.count + 1,
+                isAdding: action.isAdding
+            }
+
         default:
             return {
                 ...state
@@ -71,5 +89,6 @@ export const getPageSize = (state) => state.pageSize;
 export const getTotalCount = (state) => state.count;
 export const getFetchStatus = (state) => state.isFetchingDeployment;
 export const getDeleteItemStatus = (state) => state.isDeleting;
+export const getAddItemStatus = (state) => state.isAdding;
 
 export default appReducer;

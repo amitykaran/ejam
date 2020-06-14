@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const deploymentSchema = new Schema({
@@ -13,4 +13,4 @@ const deploymentSchema = new Schema({
 
 deploymentSchema.set('versionKey', false);
 
-export default mongoose.model('Deployment', deploymentSchema);
+module.exports =  mongoose.model('Deployment', deploymentSchema);

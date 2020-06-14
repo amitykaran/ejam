@@ -1,7 +1,7 @@
 // configuration
 
-export default {
+module.exports =  {
     stage: 'local',
-    MONGO_URL: 'mongodb://localhost:27017/vm-test',
-    PORT: int(process.env.PORT) || 8080
+    MONGO_URL: 'mongodb://localhost:27017/ejam',
+    PORT: 8080
 }
