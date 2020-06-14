@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
 import {
     Button,
@@ -10,66 +10,109 @@ import {
 } from 'react-bootstrap';
 
 function AddNewItemForm(props) {
-    const handleAddNewItem = () => {
+    const [versions, handleVersion] = useState([]);
+    const [version, handleVersionChange] = useState('');
+    const [url, handleUrl] = useState('');
+    const [template, handleTemplate] = useState({});
+    const isValid = (item) => {
+        let isValid = true;
+        if(!!!item.url) {
+            isValid = false;
+        } else if(!!!item.templateName) {
+            isValid = false;
 
+        } else if(!!!item.version) {
+            isValid = false;
+
+        }
+        return isValid;
+    }
+    const handleAddNewItem = () => {
+        let item = {};
+        item.url = url;
+        item.templateName = template.name;
+        item.version = version;
+        if(isValid(item)) {
+            props.addItem(item);
+        }
+    }
+    const handleSelectTemplate = (id) => {
+        if(id === '') {
+            handleTemplate({});
+            handleVersion([]);
+            handleVersionChange('');
+        } else {
+            props.templates.forEach(item => {
+                if(item._id === id) {
+                    handleTemplate(item);
+                    handleVersion(item.versions);
+                }
+            });
+        }
     }
     return(
-        <Modal
-            show={props.showModal}
-            onHide={props.close}>
-            <Modal.Header closeButton>
-                <Modal.Title style={{textAlign: 'center'}}>
-                    Add New Deployment
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form horizontal>
-                    <FormGroup>
-                        <Col  sm={3}>
-                            Name <span style={{color: 'red'}}>*</span>
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                inputRef={ref => { this.name = ref }}
-                                type="Text"
-                                placeholder={"Enter Name "} />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col  sm={3}>
-                            Title <span style={{color: 'red'}}></span>
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                inputRef={ref => { this.title = ref }}
-                                type="Text"
-                                placeholder={"Enter Title "} />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col  sm={3}>
-                            Url <span style={{color: 'red'}}>*</span>
-                        </Col>
-                        <Col sm={7}>
-                            <FormControl
-                                inputRef={ref => { this.url = ref }}
-                                type="Text"
-                                placeholder={"Enter Url "} />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col smOffset={4} sm={7}>
-                        </Col>
-                    </FormGroup>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <Button onClick={() => this.props.close()}>Close</Button>
-                    <Button onClick={() => handleAddNewItem()} >Create</Button>
+        <div className="add-overlay">
+            <div onClick={() => props.close()} className="add-overlay-background"></div>
+            <div className="overlay-wrapper">
+                <div className="overlay">
+                    <div className="overlay-header">
+                        Add Deployment
+                    </div>
+                    <div className="overlay-body">
+                        <Form horizontal>
+                            <FormGroup style={{marginBottom: '15px'}}>
+                                <div className="input-label">
+                                    URL <span style={{color: 'red'}}>*</span>
+                                </div>
+                                <div>
+                                    <FormControl
+                                        onChange={(e) => handleUrl(e.target.value)}
+                                        type="text"
+                                        className="input-style"
+                                        placeholder={"Enter Url "} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup style={{marginBottom: '15px'}}>
+                                <div className="input-label">
+                                    Template Name <span style={{color: 'red'}}>*</span>
+                                </div>
+                                <Col sm={7}>
+                                    <select   className="input-style" name="" id="" onChange={(e) => handleSelectTemplate(e.target.value)}>
+                                        <option value="">-- Select Template --</option>
+                                        {
+                                            props.templates && props.templates.length > 0 && props.templates.map(item => (
+                                                <option value={item._id}>{item.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup style={{marginBottom: '15px'}}>
+                                <div className="input-label">
+                                    Version <span style={{color: 'red'}}>*</span>
+                                </div>
+                                <Col sm={7}>
+                                    <select className="input-style" disabled={versions.length === 0} name="" id="" onChange={(e) => handleVersionChange(e.target.value)}>
+                                        <option value="">-- Select Version --</option>
+                                        {
+                                            versions && versions.length > 0 && versions.map(item => (
+                                                <option value={item}>{item}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                    </div>
+                    <div className="overlay-footer">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                            <Button onClick={() => props.close()}>Close</Button>
+                            <Button disabled={props.isAdding} onClick={() => handleAddNewItem()} >{props.isAdding ? 'Adding': 'Add'}</Button>
+                        </div>
+                    </div>
                 </div>
-            </Modal.Footer>
-        </Modal>
+            </div>
+        </div>
     );
 }
 

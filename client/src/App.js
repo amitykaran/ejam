@@ -16,7 +16,7 @@ import Footer from "./app/components/Footer";
 
 export default function App(props) {
   return (
-      <div style={{ backgroundColor: '#fff', width: '100%', minHeight: '100vh', position: 'relative' }}>
+      <div style={{ backgroundColor: '#fff', width: '100%', position: 'relative' }}>
           <div>
               <Header/>
           </div>

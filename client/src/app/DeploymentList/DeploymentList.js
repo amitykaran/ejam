@@ -3,7 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import {
     addDeployment,
     deleteDeployments,
-    fetchDeployment,
+    fetchDeployment, fetchTemplates,
     loadDeleteItem
 } from '../AppActions';
 import {
@@ -13,7 +13,8 @@ import {
     getList,
     getDeleteItemStatus,
     getFetchStatus,
-    getAddItemStatus
+    getAddItemStatus,
+    getTemplates
 } from '../AppReducer';
 import ListTable from "./components/ListTable";
 import AddNewItemForm from "./components/AddNewItemForm";
@@ -32,7 +33,8 @@ export default function DeploymentList(props) {
             count: getTotalCount(state),
             isFetching: getFetchStatus(state),
             isDeleting: getDeleteItemStatus(state),
-            isAdding: getAddItemStatus(state)
+            isAdding: getAddItemStatus(state),
+            templates: getTemplates(state)
         }
     })
 
@@ -46,14 +48,19 @@ export default function DeploymentList(props) {
 
     useEffect(() => {
         let filters = {};
-        // dispatch(fetchDeployment(filters));
-    });
+        filters.pageNum = currentState.pageNum;
+        filters.pageSize = currentState.pageSize;
+        dispatch(fetchTemplates());
+        dispatch(fetchDeployment(filters));
+    }, [currentState.count]);
 
     console.log('deployment list', currentState, props);
 
     return(
         <div className="deployment">
-            <div>Deployment List</div>
+            <div>
+                <h2>Deployment List</h2>
+            </div>
             <div>
                 <ListTable
                     count={currentState.count}
@@ -64,12 +71,18 @@ export default function DeploymentList(props) {
                     isDeleting={currentState.isDeleting}
                     isFetching={currentState.isFetching}
                     deleteItem={deleteItem}
+                    openAddItemForm={() => handleAddItem(true)}
                 />
-                <AddNewItemForm
-                    showModal={isOpenAddItemForm}
-                    close={() => handleAddItem(false)}
-                    addItem={addItem}
-                />
+                {
+                    isOpenAddItemForm ?
+                        <AddNewItemForm
+                            showModal={isOpenAddItemForm}
+                            close={() => handleAddItem(false)}
+                            addItem={addItem}
+                            templates={currentState.templates}
+                        /> : null
+                }
+
             </div>
         </div>
     )

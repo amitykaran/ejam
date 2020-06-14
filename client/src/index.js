@@ -11,7 +11,22 @@ import appReducer from './app/AppReducer';
 const enhancers = [
     applyMiddleware(thunk)
 ];
-const store = createStore(appReducer, {}, compose(...enhancers));
+var initialState = {
+    items: [{
+        url: 'test Url',
+        templateName: 'Template Name',
+        version: '1.0.0',
+        deployedAt: Date()
+    }],
+    count: 1,
+    pageNum: 1,
+    pageSize: 15,
+    isFetchingDeployment: false,
+    isDeleting: {},
+    isAdding: false,
+    templates: []
+};
+const store = createStore(appReducer, initialState, compose(...enhancers));
 ReactDOM.render(
     <Provider store={store}>
         <App />

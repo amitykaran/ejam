@@ -5,11 +5,12 @@ import {
     LOAD_DELETE_DEPLOYMENT,
     LOAD_DEPLOYMENT_DELETE_STATUS,
     LOAD_ADD_ITEM_STATUS,
-    LOAD_ADD_ITEM
+    LOAD_ADD_ITEM,
+    LOAD_TEMPLATE
 } from './AppActions';
 
 // initial state
-const initialState = {
+ const initialState = {
     items: [{
         url: 'test Url',
         templateName: 'Template Name',
@@ -21,7 +22,8 @@ const initialState = {
     pageSize: 15,
     isFetchingDeployment: false,
     isDeleting: {},
-    isAdding: false
+    isAdding: false,
+     templates: []
 }
 
 // reducer function
@@ -75,6 +77,12 @@ const initialState = {
                 isAdding: action.isAdding
             }
 
+        case LOAD_TEMPLATE:
+            return {
+                ...state,
+                templates: action.templates
+            }
+
         default:
             return {
                 ...state
@@ -90,5 +98,6 @@ export const getTotalCount = (state) => state.count;
 export const getFetchStatus = (state) => state.isFetchingDeployment;
 export const getDeleteItemStatus = (state) => state.isDeleting;
 export const getAddItemStatus = (state) => state.isAdding;
+export const getTemplates = (state) => state.templates;
 
 export default appReducer;

@@ -10,6 +10,7 @@ const serverConfig = require('./config');
 
 
 const deployment = require('./routes/deployment.routes');
+const template = require('./routes/template.routes');
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -52,7 +53,8 @@ app.use((req, res, next) => {
     }
 });
 
-app.use('/api/deployment', deployment);
+app.use('/api/deployments', deployment);
+app.use('/api/templates', template);
 
 
 // start app

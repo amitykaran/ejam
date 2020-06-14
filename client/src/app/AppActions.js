@@ -7,12 +7,13 @@ export const LOAD_DEPLOYMENT_DELETE_STATUS = 'LOAD_DEPLOYMENT_DELETE_STATUS';
 export const LOAD_DELETE_DEPLOYMENT = 'LOAD_DELETE_DEPLOYMENT';
 export const LOAD_ADD_ITEM = 'LOAD_ADD_ITEM';
 export const LOAD_ADD_ITEM_STATUS = 'LOAD_ADD_ITEM_STATUS';
+export const LOAD_TEMPLATE = 'LOAD_TEMPLATE';
 
 export function loadDeploymentList(data, pageNum) {
     return {
         type: LOAD_DEPLOYMENT_LIST,
         items: data.deployments,
-        count: data.totalCount,
+        count: data.count,
         pageNum: pageNum,
         isFetchingDeployment: false
     }
@@ -28,7 +29,8 @@ export function loadDeploymentFetchingStatus(status) {
 export function fetchDeployment(filters) {
     return (dispatch) => {
         dispatch(loadDeploymentFetchingStatus(true));
-        callApi(`/api/deployments/list`, 'post', filters).then(res => {
+        callApi(`api/deployments/list`, 'post', filters).then(res => {
+            console.log('res', res);
             if(res && res.status === 'Success') {
                 dispatch(loadDeploymentList(res.data, filters.pageNum));
             } else {
@@ -57,7 +59,7 @@ export function loadDeleteItem(id) {
 export function deleteDeployments(id) {
     return (dispatch) => {
         dispatch(loadDeploymentDeletingStatus(id, true));
-        callApi(`/api/deployments/${id}/remove`, 'post', {}).then(res => {
+        callApi(`api/deployments/${id}/remove`, 'post', {}).then(res => {
             if(res && res.status === 'Success') {
                 dispatch(loadDeleteItem(id));
             } else {
@@ -72,14 +74,14 @@ export function loadAddItem(item) {
     return {
         type: LOAD_ADD_ITEM,
         item: item,
-        isAddingItem: false
+        isAdding: false
     }
 }
 
 export function loadAddItemStatus(status) {
     return {
         type: LOAD_ADD_ITEM_STATUS,
-        isAddingItem: !!status
+        isAdding: !!status
     }
 }
 
@@ -91,6 +93,23 @@ export function addDeployment(item) {
                 dispatch(loadAddItem(res.data.deployment));
             } else {
                 dispatch(loadAddItemStatus(false));
+            }
+        })
+    }
+}
+
+export function loadTemplates(templates) {
+    return {
+        type: LOAD_TEMPLATE,
+        templates: templates
+    }
+}
+
+export function fetchTemplates() {
+    return (dispatch) => {
+        callApi('api/templates/list', 'post', {}).then(res => {
+            if(res && res.status === 'Success') {
+                dispatch(loadTemplates(res.data.templates));
             }
         })
     }

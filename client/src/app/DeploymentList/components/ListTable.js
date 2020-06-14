@@ -5,9 +5,11 @@ export default function ListTable(props) {
     return(
         <div className="panel">
             <div className="panel-header">
-                <div style={{ display: 'inline-flex', width: '100%' }}>
+                <div style={{ display: 'inline-flex', width: '100%', justifyContent: 'space-between' }}>
                     <div>{`Showing Item ( ${props.currentCount} )`}</div>
-                    <div></div>
+                    <div>
+                        <Button onClick={() => props.openAddItemForm()}>Add Item</Button>
+                    </div>
                 </div>
             </div>
             <div className="panel-body">
