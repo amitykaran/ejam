@@ -35,9 +35,12 @@ export default function ListTable(props) {
                         )) :
                             <tr>
                                 <td colSpan={17} style={{textAlign: 'center'}}>
-                                    <h1>
-                                        No data
-                                    </h1>
+                                    {
+                                        props.isFetching ?
+                                            <h2 style={{color: '#cdcdcd'}}>Fetching.....</h2>:
+                                            <h1> No data</h1>
+                                    }
+
                                 </td>
                             </tr>
                     }
