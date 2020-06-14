@@ -15,15 +15,23 @@ function AddNewItemForm(props) {
     const [url, handleUrl] = useState('');
     const [template, handleTemplate] = useState({});
     const isValid = (item) => {
+        // var urlRegx=/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+        var urlRegx=/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+        // let urlRegx = new RegExp('^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$');
         let isValid = true;
+        console.log('valid', urlRegx.test(item.url), item.url);
         if(!!!item.url) {
+            window.alert('Please enter url');
             isValid = false;
+        } else if(!urlRegx.test(item.url)) {
+            isValid = false;
+            window.alert('Please enter valid URL');
         } else if(!!!item.templateName) {
             isValid = false;
-
+            window.alert('Please select valid template name');
         } else if(!!!item.version) {
             isValid = false;
-
+            window.alert('Please select valid version');
         }
         return isValid;
     }

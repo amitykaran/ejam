@@ -54,7 +54,9 @@ export default function DeploymentList(props) {
         dispatch(fetchDeployment(filters));
     }, [currentState.count]);
 
-    console.log('deployment list', currentState, props);
+    useEffect(() => {
+        handleAddItem(false);
+    }, [currentState.isAdding]);
 
     return(
         <div className="deployment">
@@ -79,6 +81,7 @@ export default function DeploymentList(props) {
                             showModal={isOpenAddItemForm}
                             close={() => handleAddItem(false)}
                             addItem={addItem}
+                            isAdding={currentState.isAdding}
                             templates={currentState.templates}
                         /> : null
                 }

@@ -144,7 +144,15 @@ table, th, td {
 }
 
 .btn {
+  padding: 5px 10px;
+  border-width: 1px;
+  border-radius: 3px;
+}
 
+.btn-danger {
+  color: #f98989;
+  background-color: #fff;
+  border: 1px solid #f98989
 }
 
 .input-label {

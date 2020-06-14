@@ -8,7 +8,7 @@ export default function ListTable(props) {
                 <div style={{ display: 'inline-flex', width: '100%', justifyContent: 'space-between' }}>
                     <div>{`Showing Item ( ${props.currentCount} )`}</div>
                     <div>
-                        <Button onClick={() => props.openAddItemForm()}>Add Item</Button>
+                        <Button className="btn" onClick={() => props.openAddItemForm()}>Add Item</Button>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@ export default function ListTable(props) {
                                 <td style={{ padding: '8px 10px', minWidth: '30px' }}>{item.templateName}</td>
                                 <td style={{ padding: '8px 10px', minWidth: '30px' }}>{item.version}</td>
                                 <td style={{ padding: '8px 10px', minWidth: '30px' }}>
-                                    <Button onClick={() => props.deleteItem(item._id)} disabled={props.isDeleting[item._id]}>{props.isDeleting[item._id] ? 'Deleting' : 'Delete'}</Button>
+                                    <Button className="btn btn-danger" onClick={() => props.deleteItem(item._id)} disabled={props.isDeleting[item._id]}>{props.isDeleting[item._id] ? 'Deleting' : 'Delete'}</Button>
                                 </td>
                             </tr>
                         )) :
