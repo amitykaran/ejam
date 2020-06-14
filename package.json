@@ -1,0 +1,31 @@
+{
+  "name": "ejam",
+  "version": "1.0.0",
+  "description": "ejam assignment",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build && node dist/bin/www",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules, ./.babelrc, ./package.json, ./npm-debug.log --copy-files"
+  },
+  "author": "Amit Yadav",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "async": "^3.1.0",
+    "body-parser": "^1.15.1",
+    "compression": "^1.7.3",
+    "express": "^4.16.3",
+    "lodash": "^4.17.4",
+    "mongoose": "5.5.6",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
+}
