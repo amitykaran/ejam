@@ -81,6 +81,7 @@ table, th, td {
   background-color: #fff;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
+  overflow-x: scroll;
 }
 
 .panel-footer {
