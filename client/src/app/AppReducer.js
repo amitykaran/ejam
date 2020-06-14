@@ -11,13 +11,8 @@ import {
 
 // initial state
  const initialState = {
-    items: [{
-        url: 'test Url',
-        templateName: 'Template Name',
-        version: '1.0.0',
-        deployedAt: Date()
-    }],
-    count: 1,
+    items: [],
+    count: 0,
     pageNum: 1,
     pageSize: 15,
     isFetchingDeployment: false,

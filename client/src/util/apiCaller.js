@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
-export const API_URL = 'http://localhost:8080';
+// export const API_URL = 'http://localhost:8080';
+export const API_URL = 'https://techamity-ejam.herokuapp.com';
 
 export default function callApi(endpoint, method = 'get', body) {
     let token = window.localStorage.getItem('token') ?  window.localStorage.getItem('token') : '';
